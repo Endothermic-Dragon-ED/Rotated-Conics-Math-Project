@@ -54,20 +54,14 @@ class Intro(Scene):
       VGroup(coords).animate(
         run_time=0.8,
         rate_func=rate_functions.ease_in_out_sine
-      ).shift(
-        [
-          4*np.cos(theta) - 3*np.sin(theta) - 4,
-          4*np.sin(theta) + 3*np.cos(theta) - 3,
-          0
-        ]
-      ),
+      ).shift([-2.75,0.5,0]),
       VGroup(xTex).animate(
         run_time=0.8,
         rate_func=rate_functions.ease_in_out_sine
       ).shift(
         [
-          2*np.cos(theta) - 2,
-          2*np.sin(theta),
+          0,
+          2.25,
           0
         ]
       ),
@@ -76,23 +70,107 @@ class Intro(Scene):
         rate_func=rate_functions.ease_in_out_sine
       ).shift(
         [
-          4*np.cos(theta) - 1.5*np.sin(theta) - 4,
-          4*np.sin(theta) + 1.5*np.cos(theta) - 1.5,
+          -2.25,
+          1.5,
           0
         ]
       )
     )
-    coordsNew = Tex(r"(x', y')", font_size=60).move_to([1,1.75,0]).shift(
-      [
-        4*np.cos(theta) - 3*np.sin(theta) - 4,
-        4*np.sin(theta) + 3*np.cos(theta) - 3,
-        0
-      ]
-    )
+    coordsNew = Tex(r"(x', y')", font_size=60).move_to([-1.75,2.25,0])
     self.play(
       Transform(coords, coordsNew)
     )
-    # Draw sub-legs and theta
-    # Label lengths of sub-legs
+    self.wait()
+    angle1 = Arc(0.9, 0, theta, arc_center=[-3,-2,0])
+    angle2 = Arc(0.9, PI/2, theta, arc_center=
+      [
+        4*np.cos(theta) - 3,
+        4*np.sin(theta) - 2,
+        0
+      ]
+    )
+    line1 = Line([-3,-2,0],
+      [
+        4*np.cos(theta) - 3,
+        -2,
+        0
+      ]
+    )
+    line2 = Line(
+      [
+        4*np.cos(theta) - 3,
+        -2,
+        0
+      ],
+      [
+        4*np.cos(theta) - 3,
+        4*np.sin(theta) - 2,
+        0
+      ]
+    )
+    line3 = Line(
+      [
+        4*np.cos(theta) - 3,
+        4*np.sin(theta) - 2,
+        0
+      ],
+      [
+        4*np.cos(theta) - 3,
+        4*np.sin(theta) + 3*np.cos(theta) - 2,
+        0
+      ]
+    )
+    line4 = Line(
+      [
+        4*np.cos(theta) - 3,
+        4*np.sin(theta) + 3*np.cos(theta) - 2,
+        0
+      ],
+      [
+        4*np.cos(theta) - 3*np.sin(theta) - 3,
+        4*np.sin(theta) + 3*np.cos(theta) - 2,
+        0
+      ]
+    )
+    angle1.stroke_width=5
+    angle2.stroke_width=5
+    line1.stroke_width=7
+    line2.stroke_width=7
+    line3.stroke_width=7
+    line4.stroke_width=7
+
+    angle1.stroke_color=RED
+    angle2.stroke_color=RED
+    line1.stroke_color=RED
+    line2.stroke_color=RED
+    line3.stroke_color=RED
+    line4.stroke_color=RED
+    self.play(
+      Create(angle1),
+      Create(angle2),
+      Create(line1),
+      Create(line2),
+      Create(line3),
+      Create(line4)
+    )
+    # Label lengths of sub-legs and theta
     # Write equations on the side
+    
+    xComp1 = MathTex(r"x\cos(\theta)", font_size=50).move_to([-1,-2.5,0])
+    xComp2 = MathTex(r"x\sin(\theta)", font_size=50).move_to([1.75,-1.25,0])
+    yComp1 = MathTex(r"y\cos(\theta)", font_size=50).move_to([1.75,1,0])
+    yComp2 = MathTex(r"y\sin(\theta)", font_size=50).move_to([0,2.75,0])
+    xComp1.color=RED
+    xComp2.color=RED
+    yComp1.color=RED
+    yComp2.color=RED
+    self.play(Write(xComp1))
+    self.play(Write(xComp2))
+    self.play(Write(yComp1))
+    self.play(Write(yComp2))
+    self.wait()
+    formula1 = MathTex(r"x'=x\cos(\theta)-y\sin(\theta)", font_size=45).move_to([4.3,3,0])
+    formula2 = MathTex(r"y'=x\sin(\theta)+y\cos(\theta)", font_size=45).move_to([4.3,2,0])
+    self.play(Write(formula1))
+    self.play(Write(formula2))
     self.wait()
