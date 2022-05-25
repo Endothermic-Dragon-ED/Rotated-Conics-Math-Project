@@ -21,9 +21,9 @@ class Intro(Scene):
       Create(grid, run_time=2, lag_ratio=0.015)
     )
     self.wait()
-    coords = Tex(r"(x, y)", font_size=60).move_to([1,1.75,0])
-    xTex = Tex(r"x", font_size=60).move_to([-1,-2.75,0])
-    yTex = Tex(r"y", font_size=60).move_to([1.75,-0.5,0])
+    coords = MathTex(r"(x, y)", font_size=60).move_to([1,1.75,0])
+    xTex = MathTex(r"x", font_size=60).move_to([-1,-2.75,0])
+    yTex = MathTex(r"y", font_size=60).move_to([1.75,-0.5,0])
     xLine = Line((-3,-2,0),(1,-2,0))
     yLine = Line((1,-2,0),(1,1,0))
     xLine.stroke_width=10
@@ -76,7 +76,7 @@ class Intro(Scene):
         ]
       )
     )
-    coordsNew = Tex(r"(x', y')", font_size=60).move_to([-1.75,2.25,0])
+    coordsNew = MathTex(r"(x', y')", font_size=60).move_to([-1.75,2.25,0])
     self.play(
       Transform(coords, coordsNew)
     )
@@ -132,6 +132,7 @@ class Intro(Scene):
         0
       ]
     )
+
     angle1.stroke_width=5
     angle2.stroke_width=5
     line1.stroke_width=7
@@ -145,17 +146,23 @@ class Intro(Scene):
     line2.stroke_color=RED
     line3.stroke_color=RED
     line4.stroke_color=RED
+
+    thetaTex1 = MathTex(r"\theta", font_size=60).move_to([-1.3,-1.65,0])
+    thetaTex2 = MathTex(r"\theta", font_size=60).move_to([0.45,0.9,0])
+    thetaTex1.color=RED
+    thetaTex2.color=RED
     self.play(
       Create(angle1),
       Create(angle2),
       Create(line1),
       Create(line2),
       Create(line3),
-      Create(line4)
+      Create(line4),
+      FadeIn(thetaTex1, shift=LEFT),
+      FadeIn(thetaTex2, shift=DOWN)
     )
-    # Label lengths of sub-legs and theta
-    # Write equations on the side
-    
+    self.wait()
+
     xComp1 = MathTex(r"x\cos(\theta)", font_size=50).move_to([-1,-2.5,0])
     xComp2 = MathTex(r"x\sin(\theta)", font_size=50).move_to([1.75,-1.25,0])
     yComp1 = MathTex(r"y\cos(\theta)", font_size=50).move_to([1.75,1,0])
@@ -173,4 +180,105 @@ class Intro(Scene):
     formula2 = MathTex(r"y'=x\sin(\theta)+y\cos(\theta)", font_size=45).move_to([4.3,2,0])
     self.play(Write(formula1))
     self.play(Write(formula2))
+    self.wait()
+
+
+class GeneralizeConicFormulas(Scene):
+  def construct(self):
+    eqs1_g = {"font_size": 40}
+    arrowTemplate = MathTex(r"=>", **eqs1_g)
+    eqs1 = [
+      MathTex(r"(x-h)^2 + (y-k)^2 = r^2", **eqs1_g),
+      MathTex(r"\frac{(x-h)^2}{a^2} + \frac{(y-k)^2}{b^2} = 1", **eqs1_g),
+      MathTex(r"\frac{(x-h)^2}{b^2} + \frac{(y-k)^2}{a^2} = 1", **eqs1_g),
+      MathTex(r"\frac{(x-h)^2}{a^2} - \frac{(y-k)^2}{b^2} = 1", **eqs1_g),
+      MathTex(r"-\frac{(x-h)^2}{b^2} + \frac{(y-k)^2}{a^2} = 1", **eqs1_g)
+    ]
+    self.play(
+      *[Write(eqs1[i].shift([-4,(2-i)*1.5,0])) for i in range(len(eqs1))]
+    )
+    arrows = [arrowTemplate.copy() for i in range(5)]
+    self.wait()
+    self.play(
+      *[FadeIn(arrows[i].shift([-1,(2-i)*1.5,0]), shift=RIGHT) for i in range(len(arrows))]
+    )
+    self.wait()
+    eqs2 = [
+      MathTex(r"x^2-2xh+h^2 + y^2-2yk+k^2 = r^2", **eqs1_g),
+      MathTex(r"\frac{x^2-2xh+h^2}{a^2} + \frac{y^2-2yk+k^2}{b^2} = 1", **eqs1_g),
+      MathTex(r"\frac{x^2-2xh+h^2}{b^2} + \frac{y^2-2yk+k^2}{a^2} = 1", **eqs1_g),
+      MathTex(r"\frac{x^2-2xh+h^2}{a^2} - \frac{y^2-2yk+k^2}{b^2} = 1", **eqs1_g),
+      MathTex(r"-\frac{x^2-2xh+h^2}{b^2} + \frac{y^2-2yk+k^2}{a^2} = 1", **eqs1_g)
+    ]
+    self.play(
+      *[Write(eqs2[i].shift([3,(2-i)*1.5,0])) for i in range(len(eqs2))]
+    )
+    self.play(
+      *[FadeOut(eqs1[i], shift=RIGHT) for i in range(len(eqs1))],
+      *[FadeOut(arrows[i], shift=RIGHT) for i in range(len(arrows))],
+      *[eqs2[i].animate.shift([-6.5,0,0]) for i in range(len(eqs2))]
+    )
+    arrows = [arrowTemplate.copy() for i in range(5)]
+    for arrow in arrows:
+      arrow.font_size = 32
+    self.play(
+      *[FadeIn(arrows[i].shift([0.2,(2-i)*1.5,0]), shift=RIGHT) for i in range(len(arrows))]
+    )
+    eqs2_g = {"font_size": 32}
+    eqs3 = [
+      MathTex(r"x^2-2xh+h^2 + y^2-2yk+k^2 - r^2 = 0", **eqs2_g),
+      MathTex(r"\frac{x^2-2xh+h^2}{a^2} + \frac{y^2-2yk+k^2}{b^2} - 1 = 0", **eqs2_g),
+      MathTex(r"\frac{x^2-2xh+h^2}{b^2} + \frac{y^2-2yk+k^2}{a^2} - 1 = 0", **eqs2_g),
+      MathTex(r"\frac{x^2-2xh+h^2}{a^2} - \frac{y^2-2yk+k^2}{b^2} - 1 = 0", **eqs2_g),
+      MathTex(r"-\frac{x^2-2xh+h^2}{b^2} + \frac{y^2-2yk+k^2}{a^2} - 1 = 0", **eqs2_g)
+    ]
+    self.play(
+      *[Write(eqs3[i].shift([3.6,(2-i)*1.5,0])) for i in range(len(eqs3))]
+    )
+    self.play(
+      *[FadeOut(eqs2[i], shift=RIGHT) for i in range(len(eqs2))],
+      *[FadeOut(arrows[i], shift=RIGHT) for i in range(len(arrows))],
+      *[eqs3[i].animate.shift([-7.25,0,0]) for i in range(len(eqs3))]
+    )
+    eqs4 = [
+      MathTex(r"x^2-2xh+h^2 + y^2-2yk+k^2 - r^2 = 0", **eqs2_g),
+      MathTex(r"\frac{x^2}{a^2}-\frac{2xh}{a^2}+\frac{h^2}{a^2} + \frac{y^2}{b^2}-\frac{2yk}{b^2}+\frac{k^2}{b^2} - 1 = 0", **eqs2_g),
+      MathTex(r"\frac{x^2}{b^2}-\frac{2xh}{b^2}+\frac{h^2}{b^2} + \frac{y^2}{a^2}-\frac{2yk}{a^2}+\frac{k^2}{a^2} - 1 = 0", **eqs2_g),
+      MathTex(r"\frac{x^2}{a^2}-\frac{2xh}{a^2}+\frac{h^2}{a^2} - \frac{y^2}{b^2}-\frac{2yk}{b^2}+\frac{k^2}{b^2} - 1 = 0", **eqs2_g),
+      MathTex(r"-\frac{x^2}{b^2}-\frac{2xh}{b^2}+\frac{h^2}{b^2} + \frac{y^2}{a^2}-\frac{2yk}{a^2}+\frac{k^2}{a^2} - 1 = 0", **eqs2_g)
+    ]
+    arrows = [arrowTemplate.copy() for i in range(5)]
+    for arrow in arrows:
+      arrow.font_size = 32
+    self.play(
+      *[FadeIn(arrows[i].shift([-0.1,(2-i)*1.5,0]), shift=RIGHT) for i in range(len(arrows))]
+    )
+    self.play(
+      *[Write(eqs4[i].shift([3.5,(2-i)*1.5,0])) for i in range(len(eqs4))]
+    )
+    eqs5 = [
+      MathTex(r"\left(1\right)x^2 + \left(1\right)y^2 - \left(2h\right)x - \left(2k\right)y + \left(h^2 + k^2 - r^2\right) = 0", **eqs1_g),
+      MathTex(r"\left(\frac{1}{a^2}\right)x^2 + \left(\frac{1}{b^2}\right)y^2 - \left(\frac{2h}{a^2}\right)x - \left(\frac{2k}{b^2}\right)y + \left(\frac{h^2}{a^2} + \frac{k^2}{b^2} - 1\right) = 0", **eqs1_g),
+      MathTex(r"\left(\frac{1}{b^2}\right)x^2 + \left(\frac{1}{a^2}\right)y^2 - \left(\frac{2h}{b^2}\right)x - \left(\frac{2k}{a^2}\right)y + \left(\frac{h^2}{b^2} + \frac{k^2}{a^2} - 1\right) = 0", **eqs1_g),
+      MathTex(r"\left(\frac{1}{a^2}\right)x^2 - \left(\frac{1}{b^2}\right)y^2 - \left(\frac{2h}{a^2}\right)x + \left(\frac{2k}{b^2}\right)y + \left(\frac{h^2}{a^2} - \frac{k^2}{b^2} - 1\right) = 0", **eqs1_g),
+      MathTex(r"-\left(\frac{1}{b^2}\right)x^2 + \left(\frac{1}{a^2}\right)y^2 + \left(\frac{2h}{b^2}\right)x - \left(\frac{2k}{a^2}\right)y + \left(-\frac{h^2}{b^2} + \frac{k^2}{a^2} - 1\right) = 0", **eqs1_g)
+    ]
+    self.play(
+      *[FadeOut(eqs3[i], shift=RIGHT) for i in range(len(eqs3))],
+      *[FadeOut(arrows[i], shift=RIGHT) for i in range(len(arrows))],
+      *[eqs4[i].animate.shift([-4.25,0,0]) for i in range(len(eqs4))]
+    )
+    arrows = [arrowTemplate.copy() for i in range(5)]
+    for arrow in arrows:
+      arrow.font_size = 32
+    self.play(
+      *[FadeIn(arrows[i].shift([3.25,(2-i)*1.5,0]), shift=RIGHT) for i in range(len(arrows))]
+    )
+    self.play(
+      *[FadeOut(eqs4[i], shift=RIGHT) for i in range(len(eqs4))],
+      *[FadeOut(arrows[i], shift=RIGHT) for i in range(len(arrows))],
+    )
+    self.play(
+      *[Write(eqs5[i].shift([0,(2-i)*1.5,0])) for i in range(len(eqs5))]
+    )
     self.wait()
