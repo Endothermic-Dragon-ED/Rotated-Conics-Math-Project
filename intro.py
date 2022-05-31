@@ -285,7 +285,6 @@ class GeneralizeConicFormulas(Scene):
 
 class DeriveTheta(Scene):
   def construct(self):
-    originalEq = r"Ax^2+Bxy+Cy^2+Dx+Ey+F = 0"
     a = MathTex(r"A{{x^2}}+B{{xy}}+C{{y^2}}+D{{x}}+E{{y}}+F = 0")
     b = MathTex(r"A{{x^{\prime 2} }}+B{{xy}}+C{{y^{\prime 2} }}+D{{x}}+E{{y}}+F = 0")
     c = MathTex(r"{{A}}x^{\prime 2}+{{B}}xy+{{C}}y^{\prime 2}+{{D}}x+{{E}}y+{{F}} = 0")
