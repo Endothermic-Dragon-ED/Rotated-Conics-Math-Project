@@ -282,3 +282,56 @@ class GeneralizeConicFormulas(Scene):
       *[Write(eqs5[i].shift([0,(2-i)*1.5,0])) for i in range(len(eqs5))]
     )
     self.wait()
+
+class DeriveTheta(Scene):
+  def construct(self):
+    originalEq = r"Ax^2+Bxy+Cy^2+Dx+Ey+F = 0"
+    a = MathTex(r"A{{x^2}}+B{{xy}}+C{{y^2}}+D{{x}}+E{{y}}+F = 0")
+    b = MathTex(r"A{{x^{\prime 2} }}+B{{xy}}+C{{y^{\prime 2} }}+D{{x}}+E{{y}}+F = 0")
+    c = MathTex(r"{{A}}x^{\prime 2}+{{B}}xy+{{C}}y^{\prime 2}+{{D}}x+{{E}}y+{{F}} = 0")
+    d = MathTex(r"{{A}}(x\cos(\theta)-y\sin(\theta))^2")
+    e = MathTex(r"{{B}}(x\cos(\theta)-y\sin(\theta))(x\sin(\theta)+y\cos(\theta))")
+    f = MathTex(r"{{C}}(x\sin(\theta)+y\cos(\theta))^2")
+    g = MathTex(r"{{D}}(x\cos(\theta)-y\sin(\theta))")
+    h = MathTex(r"{{E}}(x\sin(\theta)+y\cos(\theta))")
+    i = MathTex(r"{{F}}")
+    j = MathTex(r"A^\prime x^2+B^\prime xy+C^\prime y^2+D^\prime x+E^\prime y+F^\prime = 0", substrings_to_isolate=[r"x^2", r"y^2", r"x", r"y"])
+
+    self.play(
+      Write(a.shift(UP*3))
+    )
+    self.play(
+      ReplacementTransform(a, b.shift(UP*3))
+    )
+    self.remove(b)
+    k = c.copy()
+    self.add(k.shift(UP*3))
+    self.add(c.shift(UP*3))
+    self.play(
+      TransformMatchingTex(c, d.shift(UP*2))
+    )
+    self.add(c)
+    self.play(
+      TransformMatchingTex(c, e.shift(UP))
+    )
+    self.add(c)
+    self.play(
+      TransformMatchingTex(c, f)
+    )
+    self.add(c)
+    self.play(
+      TransformMatchingTex(c, g.shift(DOWN))
+    )
+    self.add(c)
+    self.play(
+      TransformMatchingTex(c, h.shift(DOWN*2))
+    )
+    self.add(c)
+    self.remove(k)
+    self.play(
+      TransformMatchingTex(c, i.shift(DOWN*3))
+    )
+
+
+r"x'=x\cos(\theta)-y\sin(\theta)"
+r"y'=x\sin(\theta)+y\cos(\theta)"
