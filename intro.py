@@ -1,6 +1,8 @@
 import numpy as np
 from manim import *
 
+config.max_files_cached = 1000
+
 # Helpful guide: https://azarzadavila-manim.readthedocs.io/en/latest/animation.html
 class Intro(Scene):
   def construct(self):
@@ -182,7 +184,6 @@ class Intro(Scene):
     self.play(Write(formula2))
     self.wait()
 
-
 class GeneralizeConicFormulas(Scene):
   def construct(self):
     eqs1_g = {"font_size": 40}
@@ -257,11 +258,11 @@ class GeneralizeConicFormulas(Scene):
       *[Write(eqs4[i].shift([3.5,(2-i)*1.5,0])) for i in range(len(eqs4))]
     )
     eqs5 = [
-      MathTex(r"\left(1\right)x^2 + \left(1\right)y^2 - \left(2h\right)x - \left(2k\right)y + \left(h^2 + k^2 - r^2\right) = 0", **eqs1_g),
-      MathTex(r"\left(\frac{1}{a^2}\right)x^2 + \left(\frac{1}{b^2}\right)y^2 - \left(\frac{2h}{a^2}\right)x - \left(\frac{2k}{b^2}\right)y + \left(\frac{h^2}{a^2} + \frac{k^2}{b^2} - 1\right) = 0", **eqs1_g),
-      MathTex(r"\left(\frac{1}{b^2}\right)x^2 + \left(\frac{1}{a^2}\right)y^2 - \left(\frac{2h}{b^2}\right)x - \left(\frac{2k}{a^2}\right)y + \left(\frac{h^2}{b^2} + \frac{k^2}{a^2} - 1\right) = 0", **eqs1_g),
-      MathTex(r"\left(\frac{1}{a^2}\right)x^2 - \left(\frac{1}{b^2}\right)y^2 - \left(\frac{2h}{a^2}\right)x + \left(\frac{2k}{b^2}\right)y + \left(\frac{h^2}{a^2} - \frac{k^2}{b^2} - 1\right) = 0", **eqs1_g),
-      MathTex(r"-\left(\frac{1}{b^2}\right)x^2 + \left(\frac{1}{a^2}\right)y^2 + \left(\frac{2h}{b^2}\right)x - \left(\frac{2k}{a^2}\right)y + \left(-\frac{h^2}{b^2} + \frac{k^2}{a^2} - 1\right) = 0", **eqs1_g)
+      MathTex(r"{{\left(1\right)}}{{x^2}} + {{\left(1\right)}}{{y^2}} - {{\left(2h\right)}}{{x}} - {{\left(2k\right)}}{{y}} + {{\left(h^2 + k^2 - r^2\right)}}{{ = 0}}", **eqs1_g),
+      MathTex(r"{{\left(\frac{1}{a^2}\right)}}{{x^2}} + {{\left(\frac{1}{b^2}\right)}}{{y^2}} - {{\left(\frac{2h}{a^2}\right)}}{{x}} - {{\left(\frac{2k}{b^2}\right)}}{{y}} + {{\left(\frac{h^2}{a^2} + \frac{k^2}{b^2} - 1\right)}}{{ = 0}}", **eqs1_g),
+      MathTex(r"{{\left(\frac{1}{b^2}\right)}}{{x^2}} + {{\left(\frac{1}{a^2}\right)}}{{y^2}} - {{\left(\frac{2h}{b^2}\right)}}{{x}} - {{\left(\frac{2k}{a^2}\right)}}{{y}} + {{\left(\frac{h^2}{b^2} + \frac{k^2}{a^2} - 1\right)}}{{ = 0}}", **eqs1_g),
+      MathTex(r"{{\left(\frac{1}{a^2}\right)}}{{x^2}} - {{\left(\frac{1}{b^2}\right)}}{{y^2}} - {{\left(\frac{2h}{a^2}\right)}}{{x}} + {{\left(\frac{2k}{b^2}\right)}}{{y}} + {{\left(\frac{h^2}{a^2} - \frac{k^2}{b^2} - 1\right)}}{{ = 0}}", **eqs1_g),
+      MathTex(r"{{-\left(\frac{1}{b^2}\right)}}{{x^2}} + {{\left(\frac{1}{a^2}\right)}}{{y^2}} + {{\left(\frac{2h}{b^2}\right)}}{{x}} - {{\left(\frac{2k}{a^2}\right)}}{{y}} + {{\left(-\frac{h^2}{b^2} + \frac{k^2}{a^2} - 1\right)}}{{ = 0}}", **eqs1_g)
     ]
     self.play(
       *[FadeOut(eqs3[i], shift=RIGHT) for i in range(len(eqs3))],
@@ -281,56 +282,295 @@ class GeneralizeConicFormulas(Scene):
     self.play(
       *[Write(eqs5[i].shift([0,(2-i)*1.5,0])) for i in range(len(eqs5))]
     )
+
+    eqs6 = [eq.copy() for eq in eqs5]
+    for eq in eqs6:
+      eq.submobjects[0].color = RED
+      eq.submobjects[1].color = BLUE
+      eq.submobjects[3].color = RED
+      eq.submobjects[4].color = BLUE
+      eq.submobjects[6].color = RED
+      eq.submobjects[7].color = BLUE
+      eq.submobjects[9].color = RED
+      eq.submobjects[10].color = BLUE
+      eq.submobjects[12].color = RED
+    
+    self.play(
+      TransformMatchingTex(
+        Group(*eqs5),
+        Group(*eqs6)
+      )
+    )
+
+    self.play(
+      FadeOut(Group(*eqs6), shift=DOWN)
+    )
+    eq = MathTex(r"{{A}}{{x^2}} + {{C}}{{y^2}} + {{D}}{{x}} + {{E}}{{y}} + {{F}} = 0")
+    eq.submobjects[0].color = RED
+    eq.submobjects[1].color = BLUE
+    eq.submobjects[3].color = RED
+    eq.submobjects[4].color = BLUE
+    eq.submobjects[6].color = RED
+    eq.submobjects[7].color = BLUE
+    eq.submobjects[9].color = RED
+    eq.submobjects[10].color = BLUE
+    eq.submobjects[12].color = RED
+
+    eq2 = MathTex(r"{{A}}{{x^2}} + {{B}}{{xy}} + {{C}}{{y^2}} + {{D}}{{x}} + {{E}}{{y}} + {{F}} = 0")
+    eq2.submobjects[0].color = RED
+    eq2.submobjects[1].color = BLUE
+    eq2.submobjects[3].color = RED
+    eq2.submobjects[4].color = BLUE
+    eq2.submobjects[6].color = RED
+    eq2.submobjects[7].color = BLUE
+    eq2.submobjects[9].color = RED
+    eq2.submobjects[10].color = BLUE
+    eq2.submobjects[12].color = RED
+    eq2.submobjects[13].color = BLUE
+    eq2.submobjects[15].color = RED
+
+    self.play(
+      Write(eq)
+    )
+
+    self.play(
+      TransformMatchingTex(eq, eq2)
+    )
+
     self.wait()
 
 class DeriveTheta(Scene):
   def construct(self):
     a = MathTex(r"A{{x^2}}+B{{xy}}+C{{y^2}}+D{{x}}+E{{y}}+F = 0")
     b = MathTex(r"A{{x^{\prime 2} }}+B{{xy}}+C{{y^{\prime 2} }}+D{{x}}+E{{y}}+F = 0")
-    c = MathTex(r"{{A}}x^{\prime 2}+{{B}}xy+{{C}}y^{\prime 2}+{{D}}x+{{E}}y+{{F}} = 0")
-    d = MathTex(r"{{A}}(x\cos(\theta)-y\sin(\theta))^2")
-    e = MathTex(r"{{B}}(x\cos(\theta)-y\sin(\theta))(x\sin(\theta)+y\cos(\theta))")
-    f = MathTex(r"{{C}}(x\sin(\theta)+y\cos(\theta))^2")
-    g = MathTex(r"{{D}}(x\cos(\theta)-y\sin(\theta))")
-    h = MathTex(r"{{E}}(x\sin(\theta)+y\cos(\theta))")
-    i = MathTex(r"{{F}}")
-    j = MathTex(r"A^\prime x^2+B^\prime xy+C^\prime y^2+D^\prime x+E^\prime y+F^\prime = 0", substrings_to_isolate=[r"x^2", r"y^2", r"x", r"y"])
+    c = MathTex(r"{{Ax^{\prime 2} }}+{{Bxy}}+{{Cy^{\prime 2} }}+{{Dx}}+{{Ey}}+{{F}} = 0")
+    d = [
+      MathTex(r"{{Ax^{\prime 2} }}").shift(UP*2.5),
+      MathTex(r"{{Bxy}}").shift(UP*1.5),
+      MathTex(r"{{Cy^{\prime 2} }}").shift(UP*0.5),
+      MathTex(r"{{Dx}}").shift(DOWN*0.5),
+      MathTex(r"{{Ey}}").shift(DOWN*1.5),
+      MathTex(r"{{F}}").shift(DOWN*2.5)
+    ]
+    d_group = Group(*d).shift(LEFT*6)
+    e = [
+      MathTex(r"{{A}}x^{\prime 2}").shift(UP*2.5),
+      MathTex(r"{{B}}xy").shift(UP*1.5),
+      MathTex(r"{{C}}y^{\prime 2}").shift(UP*0.5),
+      MathTex(r"{{D}}x").shift(DOWN*0.5),
+      MathTex(r"{{E}}y").shift(DOWN*1.5),
+      MathTex(r"{{F}}").shift(DOWN*2.5)
+    ]
+    e_group = Group(*e).shift(LEFT*6)
+    f = [
+      MathTex(r"{{A}}(x\cos(\theta)-y\sin(\theta))^2").shift(UP*2.5).shift(LEFT*4),
+      MathTex(r"{{B}}(x\cos(\theta)-y\sin(\theta))(x\sin(\theta)+y\cos(\theta))").shift(UP*1.5).shift(LEFT*2),
+      MathTex(r"{{C}}(x\sin(\theta)+y\cos(\theta))^2").shift(UP*0.5).shift(LEFT*4),
+      MathTex(r"{{D}}(x\cos(\theta)-y\sin(\theta))").shift(DOWN*0.5).shift(LEFT*4),
+      MathTex(r"{{E}}(x\sin(\theta)+y\cos(\theta))").shift(DOWN*1.5).shift(LEFT*4),
+      MathTex(r"{{F}}").shift(DOWN*2.5).shift(LEFT*6)
+    ]
+    f_group = Group(*f)
 
     self.play(
       Write(a.shift(UP*3))
     )
     self.play(
-      ReplacementTransform(a, b.shift(UP*3))
+      TransformMatchingTex(a, b.shift(UP*3))
     )
     self.remove(b)
-    k = c.copy()
-    self.add(k.shift(UP*3))
     self.add(c.shift(UP*3))
     self.play(
-      TransformMatchingTex(c, d.shift(UP*2))
+      TransformMatchingTex(c, d_group)
     )
-    self.add(c)
+    self.remove(d_group)
+    self.add(e_group)
+    self.wait()
+    
     self.play(
-      TransformMatchingTex(c, e.shift(UP))
+      TransformMatchingTex(e_group, f_group)
     )
-    self.add(c)
+    self.wait()
     self.play(
-      TransformMatchingTex(c, f)
-    )
-    self.add(c)
-    self.play(
-      TransformMatchingTex(c, g.shift(DOWN))
-    )
-    self.add(c)
-    self.play(
-      TransformMatchingTex(c, h.shift(DOWN*2))
-    )
-    self.add(c)
-    self.remove(k)
-    self.play(
-      TransformMatchingTex(c, i.shift(DOWN*3))
+      f[1].animate.shift(DOWN*1),
+      f[2].animate.shift(DOWN*2),
+      FadeOut(f[3], shift=DOWN),
+      FadeOut(f[4], shift=DOWN),
+      FadeOut(f[5], shift=DOWN)
     )
 
+    g = [
+      MathTex(r"{{A}}({{x\cos(\theta)}}-{{y\sin(\theta)}})^2").shift(UP*2.5).shift(LEFT*4),
+      MathTex(r"{{B}}({{x\cos(\theta)}}-{{y\sin(\theta)}})({{x\sin(\theta)}}+{{y\cos(\theta)}})").shift(UP*0.5).shift(LEFT*2),
+      MathTex(r"{{C}}({{x\sin(\theta)}}+{{y\cos(\theta)}})^2").shift(DOWN*1.5).shift(LEFT*4),
+      MathTex(r"A \cdot -2xy\sin(\theta)\cos(\theta) = {{-Axy\sin(2\theta)}}").shift(UP*1.5).shift(LEFT*2.3),
+      MathTex(r"{{B}} \cdot ({{xy\cos^2(\theta)}} - {{xy\sin^2(\theta)}}) = {{Bxy\cos(2\theta)}}").shift(DOWN*0.5).shift(LEFT*1.8),
+      MathTex(r"C \cdot 2xy\sin(\theta)\cos(\theta) = {{Cxy\sin(2\theta)}}").shift(DOWN*2.5).shift(LEFT*2.7)
+    ]
 
-r"x'=x\cos(\theta)-y\sin(\theta)"
-r"y'=x\sin(\theta)+y\cos(\theta)"
+    step_1 = g[0].copy().set_color_by_tex_to_color_map({
+      "A": RED,
+      "x": RED,
+      "y": RED
+    })
+
+    self.play(
+      TransformMatchingTex(f[0], step_1)
+    )
+
+    self.play(
+      Write(g[3])
+    )
+
+    self.play(
+      TransformMatchingTex(step_1, f[0])
+    )
+
+    step_2 = g[1].copy()
+    step_2.submobjects[0].color = RED
+    step_2.submobjects[2].color = RED
+    step_2.submobjects[8].color = RED
+
+    self.play(
+      TransformMatchingTex(f[1], step_2)
+    )
+
+    substep_2 = g[4].copy()
+    substep_2.submobjects[0].color = RED
+    substep_2.submobjects[2].color = RED
+
+    self.play(
+      Write(substep_2)
+    )
+
+    step_3 = g[1].copy()
+    step_3.submobjects[0].color = RED
+    step_3.submobjects[4].color = RED
+    step_3.submobjects[6].color = RED
+
+    substep_3 = g[4].copy()
+    substep_3.submobjects[0].color = RED
+    substep_3.submobjects[4].color = RED
+
+    self.play(
+      TransformMatchingTex(step_2, step_3),
+      TransformMatchingTex(substep_2, substep_3)
+    )
+
+    self.play(
+      TransformMatchingTex(step_3, f[1]),
+      TransformMatchingTex(substep_3, g[4])
+    )
+
+    step_4 = g[2].copy().set_color_by_tex_to_color_map({
+      "C": RED,
+      "x": RED,
+      "y": RED
+    })
+
+    self.play(
+      TransformMatchingTex(f[2], step_4)
+    )
+
+    self.play(
+      Write(g[5])
+    )
+
+    self.play(
+      TransformMatchingTex(step_4, f[2])
+    )
+
+    self.play(
+      FadeOut(Group(f[0], f[1], f[2]))
+    )
+
+    oldEqs = Group(g[3], g[4], g[5])
+    newEqs = [
+      MathTex(r"Bxy = {{-Axy\sin(2\theta)}} + {{Bxy\cos(2\theta)}} + {{Cxy\sin(2\theta)}}"),
+      MathTex(r"{{B}}xy{{ = -A}}xy{{\sin(2\theta) + B}}xy{{\cos(2\theta) + C}}xy{{\sin(2\theta)}}"),
+      MathTex(r"{{B}}{{ = -A}}{{\sin(2\theta) + B}}{{\cos(2\theta) + C}}{{\sin(2\theta)}}"),
+      MathTex(r"{{B}} = {{-A\sin(2\theta)}} + {{B\cos(2\theta)}} + {{C\sin(2\theta)}}"),
+      MathTex(r"{{0}} = {{-A\sin(2\theta)}} + {{B\cos(2\theta)}} + {{C\sin(2\theta)}}"),
+      MathTex(r"{{A\sin(2\theta)}} - {{C\sin(2\theta)}} = {{B\cos(2\theta)}}"),
+      MathTex(r"{{A}}{{\sin(2\theta)}} {{- C}}{{\sin(2\theta)}} = B{{\cos(2\theta)}}"),
+      MathTex(r"({{A}} {{- C}}){{\sin(2\theta)}} = B{{\cos(2\theta)}}"),
+      MathTex(r"{{\frac{A - C}{B} }} = \frac{\cos(2\theta)}{\sin(2\theta)}"),
+      MathTex(r"{{\frac{A - C}{B} }}{{ = }}{{\cot(2\theta)}}"),
+      MathTex(r"{{\cot(2\theta)}}{{ = }}{{\frac{A - C}{B} }}"),
+    ]
+
+    self.play(
+      TransformMatchingTex(oldEqs, newEqs[0])
+    )
+
+    self.remove(newEqs[0])
+    self.add(newEqs[1])
+
+    self.play(
+      TransformMatchingTex(newEqs[1], newEqs[2])
+    )
+
+    self.remove(newEqs[2])
+    self.add(newEqs[3])
+
+    self.play(
+      TransformMatchingTex(newEqs[3], newEqs[4])
+    )
+
+    self.play(
+      TransformMatchingTex(newEqs[4], newEqs[5])
+    )
+
+    self.remove(newEqs[5])
+    self.add(newEqs[6])
+
+    self.play(
+      TransformMatchingTex(newEqs[6], newEqs[7])
+    )
+
+    self.play(
+      ReplacementTransform(newEqs[7], newEqs[8])
+    )
+
+    self.play(
+      ReplacementTransform(newEqs[8], newEqs[9])
+    )
+
+    self.play(
+      TransformMatchingTex(newEqs[9], newEqs[10])
+    )
+
+    self.wait()
+
+class DisplayEquations(Scene):
+  def construct(self):
+    eqs1_g = {"font_size": 40}
+    eqs1 = [
+      Tex(r"These remain constant, no matter what rigid transformation\\(translation or rotation) is applied to it.", **eqs1_g).shift(UP*3),
+      MathTex(r"F = F^\prime", **eqs1_g).shift(UP*2),
+      MathTex(r"A + C = A^\prime + C^\prime", **eqs1_g).shift(UP*1.25),
+      MathTex(r"B^2 - 4AC = B^{\prime 2} - 4A^\prime C^\prime", **eqs1_g).shift(UP*0.5),
+      Tex(r"The expression, $B^2 - 4AC$, can also be used\\to categorize the type of conic.", **eqs1_g).shift(DOWN*0.5),
+      Tex("Ellipse or circle: $B^2 - 4AC < 0$", **eqs1_g).shift(DOWN*1.5),
+      Tex("Parabola: $B^2 - 4AC = 0$", **eqs1_g).shift(DOWN*2.25),
+      Tex("Hyperbola: $B^2 - 4AC > 0$", **eqs1_g).shift(DOWN*3)
+    ]
+    self.play(
+      Write(eqs1[0])
+    )
+    self.play(
+      *[Write(eq) for eq in eqs1[1:4]]
+    )
+    self.play(
+      Write(eqs1[4])
+    )
+    self.play(
+      *[Write(eq) for eq in eqs1[5:]]
+    )
+
+    self.wait()
+
+#manim -pqk intro.py Intro
+#manim -pqk intro.py GeneralizeConicFormulas
+#manim -pqk intro.py DeriveTheta
+#manim -pqk intro.py DisplayEquations
