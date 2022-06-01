@@ -1,9 +1,8 @@
 import numpy as np
 from manim import *
 
-config.max_files_cached = 1000
+config.max_files_cached = 10000
 
-# Helpful guide: https://azarzadavila-manim.readthedocs.io/en/latest/animation.html
 class Intro(Scene):
   def construct(self):
     point = Dot(point=np.array([0, 0.0, 0.0]))
