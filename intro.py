@@ -181,7 +181,6 @@ class Intro(Scene):
     formula2 = MathTex(r"y'=x\sin(\theta)+y\cos(\theta)", font_size=45).move_to([4.3,2,0])
     self.play(Write(formula1))
     self.play(Write(formula2))
-    self.wait()
 
 class GeneralizeConicFormulas(Scene):
   def construct(self):
@@ -315,261 +314,290 @@ class GeneralizeConicFormulas(Scene):
     eq.submobjects[10].color = BLUE
     eq.submobjects[12].color = RED
 
-    eq2 = MathTex(r"{{A}}{{x^2}} + {{B}}{{xy}} + {{C}}{{y^2}} + {{D}}{{x}} + {{E}}{{y}} + {{F}} = 0")
-    eq2.submobjects[0].color = RED
-    eq2.submobjects[1].color = BLUE
-    eq2.submobjects[3].color = RED
-    eq2.submobjects[4].color = BLUE
-    eq2.submobjects[6].color = RED
-    eq2.submobjects[7].color = BLUE
-    eq2.submobjects[9].color = RED
-    eq2.submobjects[10].color = BLUE
-    eq2.submobjects[12].color = RED
-    eq2.submobjects[13].color = BLUE
-    eq2.submobjects[15].color = RED
-
     self.play(
       Write(eq)
     )
 
-    self.play(
-      TransformMatchingTex(eq, eq2)
-    )
-
-    self.wait()
-
-class DeriveTheta(Scene):
+class DisplayRotationEquation(Scene):
   def construct(self):
-    a = MathTex(r"A{{x^2}}+B{{xy}}+C{{y^2}}+D{{x}}+E{{y}}+F = 0")
-    b = MathTex(r"A{{x^{\prime 2} }}+B{{xy}}+C{{y^{\prime 2} }}+D{{x}}+E{{y}}+F = 0")
-    c = MathTex(r"{{Ax^{\prime 2} }}+{{Bxy}}+{{Cy^{\prime 2} }}+{{Dx}}+{{Ey}}+{{F}} = 0")
-    d = [
-      MathTex(r"{{Ax^{\prime 2} }}").shift(UP*2.5),
-      MathTex(r"{{Bxy}}").shift(UP*1.5),
-      MathTex(r"{{Cy^{\prime 2} }}").shift(UP*0.5),
-      MathTex(r"{{Dx}}").shift(DOWN*0.5),
-      MathTex(r"{{Ey}}").shift(DOWN*1.5),
-      MathTex(r"{{F}}").shift(DOWN*2.5)
-    ]
-    d_group = Group(*d).shift(LEFT*6)
-    e = [
-      MathTex(r"{{A}}x^{\prime 2}").shift(UP*2.5),
-      MathTex(r"{{B}}xy").shift(UP*1.5),
-      MathTex(r"{{C}}y^{\prime 2}").shift(UP*0.5),
-      MathTex(r"{{D}}x").shift(DOWN*0.5),
-      MathTex(r"{{E}}y").shift(DOWN*1.5),
-      MathTex(r"{{F}}").shift(DOWN*2.5)
-    ]
-    e_group = Group(*e).shift(LEFT*6)
-    f = [
-      MathTex(r"{{A}}(x\cos(\theta)-y\sin(\theta))^2").shift(UP*2.5).shift(LEFT*4),
-      MathTex(r"{{B}}(x\cos(\theta)-y\sin(\theta))(x\sin(\theta)+y\cos(\theta))").shift(UP*1.5).shift(LEFT*2),
-      MathTex(r"{{C}}(x\sin(\theta)+y\cos(\theta))^2").shift(UP*0.5).shift(LEFT*4),
-      MathTex(r"{{D}}(x\cos(\theta)-y\sin(\theta))").shift(DOWN*0.5).shift(LEFT*4),
-      MathTex(r"{{E}}(x\sin(\theta)+y\cos(\theta))").shift(DOWN*1.5).shift(LEFT*4),
-      MathTex(r"{{F}}").shift(DOWN*2.5).shift(LEFT*6)
-    ]
-    f_group = Group(*f)
+    eq_old = MathTex(r"{{A}}{{x^2}} + {{C}}{{y^2}} + {{D}}{{x}} + {{E}}{{y}} + {{F}} = 0")
+    eq_old.submobjects[0].color = RED
+    eq_old.submobjects[1].color = BLUE
+    eq_old.submobjects[3].color = RED
+    eq_old.submobjects[4].color = BLUE
+    eq_old.submobjects[6].color = RED
+    eq_old.submobjects[7].color = BLUE
+    eq_old.submobjects[9].color = RED
+    eq_old.submobjects[10].color = BLUE
+    eq_old.submobjects[12].color = RED
 
+    eq2_org = MathTex(r"{{A}}{{x^2}} + {{B}}{{xy}} + {{C}}{{y^2}} + {{D}}{{x}} + {{E}}{{y}} + {{F}} = 0")
+    eq2_old = eq2_org.copy()
+    eq2_old.submobjects[0].color = RED
+    eq2_old.submobjects[1].color = BLUE
+    eq2_old.submobjects[3].color = RED
+    eq2_old.submobjects[4].color = BLUE
+    eq2_old.submobjects[6].color = RED
+    eq2_old.submobjects[7].color = BLUE
+    eq2_old.submobjects[9].color = RED
+    eq2_old.submobjects[10].color = BLUE
+    eq2_old.submobjects[12].color = RED
+    eq2_old.submobjects[13].color = BLUE
+    eq2_old.submobjects[15].color = RED
+
+    self.add(eq_old)
     self.play(
-      Write(a.shift(UP*3))
-    )
-    self.play(
-      TransformMatchingTex(a, b.shift(UP*3))
-    )
-    self.remove(b)
-    self.add(c.shift(UP*3))
-    self.play(
-      TransformMatchingTex(c, d_group)
-    )
-    self.remove(d_group)
-    self.add(e_group)
-    self.wait()
-    
-    self.play(
-      TransformMatchingTex(e_group, f_group)
-    )
-    self.wait()
-    self.play(
-      f[1].animate.shift(DOWN*1),
-      f[2].animate.shift(DOWN*2),
-      FadeOut(f[3], shift=DOWN),
-      FadeOut(f[4], shift=DOWN),
-      FadeOut(f[5], shift=DOWN)
+      eq_old.animate.shift(UP*2)
     )
 
-    g = [
-      MathTex(r"{{A}}({{x\cos(\theta)}}-{{y\sin(\theta)}})^2").shift(UP*2.5).shift(LEFT*4),
-      MathTex(r"{{B}}({{x\cos(\theta)}}-{{y\sin(\theta)}})({{x\sin(\theta)}}+{{y\cos(\theta)}})").shift(UP*0.5).shift(LEFT*2),
-      MathTex(r"{{C}}({{x\sin(\theta)}}+{{y\cos(\theta)}})^2").shift(DOWN*1.5).shift(LEFT*4),
-      MathTex(r"A \cdot -2xy\sin(\theta)\cos(\theta) = {{-Axy\sin(2\theta)}}").shift(UP*1.5).shift(LEFT*2.3),
-      MathTex(r"{{B}} \cdot ({{xy\cos^2(\theta)}} - {{xy\sin^2(\theta)}}) = {{Bxy\cos(2\theta)}}").shift(DOWN*0.5).shift(LEFT*1.8),
-      MathTex(r"C \cdot 2xy\sin(\theta)\cos(\theta) = {{Cxy\sin(2\theta)}}").shift(DOWN*2.5).shift(LEFT*2.7)
-    ]
-
-    step_1 = g[0].copy().set_color_by_tex_to_color_map({
-      "A": RED,
-      "x": RED,
-      "y": RED
-    })
-
+    ellipse = Ellipse(width=4.0, height=2.0, color=BLUE).shift(DOWN*1)
     self.play(
-      TransformMatchingTex(f[0], step_1)
+      Create(ellipse)
     )
 
     self.play(
-      Write(g[3])
+      TransformMatchingTex(eq_old, eq2_old.shift(UP*2)),
+      Rotate(ellipse, PI/5)
     )
 
     self.play(
-      TransformMatchingTex(step_1, f[0])
-    )
-
-    step_2 = g[1].copy()
-    step_2.submobjects[0].color = RED
-    step_2.submobjects[2].color = RED
-    step_2.submobjects[8].color = RED
-
-    self.play(
-      TransformMatchingTex(f[1], step_2)
-    )
-
-    substep_2 = g[4].copy()
-    substep_2.submobjects[0].color = RED
-    substep_2.submobjects[2].color = RED
-
-    self.play(
-      Write(substep_2)
-    )
-
-    step_3 = g[1].copy()
-    step_3.submobjects[0].color = RED
-    step_3.submobjects[4].color = RED
-    step_3.submobjects[6].color = RED
-
-    substep_3 = g[4].copy()
-    substep_3.submobjects[0].color = RED
-    substep_3.submobjects[4].color = RED
-
-    self.play(
-      TransformMatchingTex(step_2, step_3),
-      TransformMatchingTex(substep_2, substep_3)
+      TransformMatchingTex(eq2_old, eq2_org.shift(UP*2))
     )
 
     self.play(
-      TransformMatchingTex(step_3, f[1]),
-      TransformMatchingTex(substep_3, g[4])
+      FadeOut(ellipse, shift=DOWN)
     )
 
-    step_4 = g[2].copy().set_color_by_tex_to_color_map({
-      "C": RED,
-      "x": RED,
-      "y": RED
-    })
+    rotationFormula = MathTex(r"\cot(2\theta) = \frac{A-C}{B}").shift(DOWN*0.5)
+    domainRestriction = Tex(r"Domain: $0<\theta<\frac{\pi}{2}$").shift(DOWN*2)
 
     self.play(
-      TransformMatchingTex(f[2], step_4)
+      Write(rotationFormula)
     )
 
     self.play(
-      Write(g[5])
+      Write(domainRestriction)
     )
 
     self.play(
-      TransformMatchingTex(step_4, f[2])
+      eq2_org.animate.scale(0.8).shift([-2.5,0.9,0]),
+      rotationFormula.animate.scale(0.8).shift([4,3.8,0]),
+      domainRestriction.animate.scale(0.8).shift([4,4.5,0])
     )
-
-    self.play(
-      FadeOut(Group(f[0], f[1], f[2]))
-    )
-
-    oldEqs = Group(g[3], g[4], g[5])
-    newEqs = [
-      MathTex(r"Bxy = {{-Axy\sin(2\theta)}} + {{Bxy\cos(2\theta)}} + {{Cxy\sin(2\theta)}}"),
-      MathTex(r"{{B}}xy{{ = -A}}xy{{\sin(2\theta) + B}}xy{{\cos(2\theta) + C}}xy{{\sin(2\theta)}}"),
-      MathTex(r"{{B}}{{ = -A}}{{\sin(2\theta) + B}}{{\cos(2\theta) + C}}{{\sin(2\theta)}}"),
-      MathTex(r"{{B}} = {{-A\sin(2\theta)}} + {{B\cos(2\theta)}} + {{C\sin(2\theta)}}"),
-      MathTex(r"{{0}} = {{-A\sin(2\theta)}} + {{B\cos(2\theta)}} + {{C\sin(2\theta)}}"),
-      MathTex(r"{{A\sin(2\theta)}} - {{C\sin(2\theta)}} = {{B\cos(2\theta)}}"),
-      MathTex(r"{{A}}{{\sin(2\theta)}} {{- C}}{{\sin(2\theta)}} = B{{\cos(2\theta)}}"),
-      MathTex(r"({{A}} {{- C}}){{\sin(2\theta)}} = B{{\cos(2\theta)}}"),
-      MathTex(r"{{\frac{A - C}{B} }} = \frac{\cos(2\theta)}{\sin(2\theta)}"),
-      MathTex(r"{{\frac{A - C}{B} }}{{ = }}{{\cot(2\theta)}}"),
-      MathTex(r"{{\cot(2\theta)}}{{ = }}{{\frac{A - C}{B} }}"),
-    ]
-
-    self.play(
-      TransformMatchingTex(oldEqs, newEqs[0])
-    )
-
-    self.remove(newEqs[0])
-    self.add(newEqs[1])
-
-    self.play(
-      TransformMatchingTex(newEqs[1], newEqs[2])
-    )
-
-    self.remove(newEqs[2])
-    self.add(newEqs[3])
-
-    self.play(
-      TransformMatchingTex(newEqs[3], newEqs[4])
-    )
-
-    self.play(
-      TransformMatchingTex(newEqs[4], newEqs[5])
-    )
-
-    self.remove(newEqs[5])
-    self.add(newEqs[6])
-
-    self.play(
-      TransformMatchingTex(newEqs[6], newEqs[7])
-    )
-
-    self.play(
-      ReplacementTransform(newEqs[7], newEqs[8])
-    )
-
-    self.play(
-      ReplacementTransform(newEqs[8], newEqs[9])
-    )
-
-    self.play(
-      TransformMatchingTex(newEqs[9], newEqs[10])
-    )
-
-    self.wait()
 
 class DisplayEquations(Scene):
   def construct(self):
-    eqs1_g = {"font_size": 40}
+    eq2_org = MathTex(r"{{A}}{{x^2}} + {{B}}{{xy}} + {{C}}{{y^2}} + {{D}}{{x}} + {{E}}{{y}} + {{F}} = 0")
+    rotationFormula = MathTex(r"\cot(2\theta) = \frac{A-C}{B}").shift(DOWN*0.5)
+    domainRestriction = Tex(r"Domain: $0<\theta<\frac{\pi}{2}$").shift(DOWN*2)
+
+    self.add(
+      eq2_org.scale(0.8).shift([-2.5,2.9,0]),
+      rotationFormula.scale(0.8).shift([4,3.8,0]),
+      domainRestriction.scale(0.8).shift([4,4.5,0])
+    )
+
     eqs1 = [
-      Tex(r"These remain constant, no matter what rigid transformation\\(translation or rotation) is applied to it.", **eqs1_g).shift(UP*3),
-      MathTex(r"F = F^\prime", **eqs1_g).shift(UP*2),
-      MathTex(r"A + C = A^\prime + C^\prime", **eqs1_g).shift(UP*1.25),
-      MathTex(r"B^2 - 4AC = B^{\prime 2} - 4A^\prime C^\prime", **eqs1_g).shift(UP*0.5),
-      Tex(r"The expression, $B^2 - 4AC$, can also be used\\to categorize the type of conic.", **eqs1_g).shift(DOWN*0.5),
-      Tex("Ellipse or circle: $B^2 - 4AC < 0$", **eqs1_g).shift(DOWN*1.5),
-      Tex("Parabola: $B^2 - 4AC = 0$", **eqs1_g).shift(DOWN*2.25),
-      Tex("Hyperbola: $B^2 - 4AC > 0$", **eqs1_g).shift(DOWN*3)
+      Tex(r"These remain constant, no matter what rigid transformation\\(translation or rotation) is applied to it.").scale(0.8).shift(UP*1.6),
+      MathTex(r"F = F^\prime").shift(UP*0.8).scale(0.8),
+      MathTex(r"A + C = A^\prime + C^\prime").shift(UP*0.2).scale(0.8),
+      MathTex(r"B^2 - 4AC = B^{\prime 2} - 4A^\prime C^\prime").shift(DOWN*0.4).scale(0.8),
+      Tex(r"The expression, $B^2 - 4AC$, can also be used\\ to categorize the type of conic.").shift(DOWN*1.3).scale(0.8),
+      Tex(r"Ellipse or circle: $B^2 - 4AC < 0$").shift(DOWN*2.1).scale(0.8),
+      Tex(r"Parabola: $B^2 - 4AC = 0$").shift(DOWN*2.7).scale(0.8),
+      Tex(r"Hyperbola: $B^2 - 4AC > 0$").shift(DOWN*3.3).scale(0.8)
     ]
     self.play(
       Write(eqs1[0])
     )
     self.play(
-      *[Write(eq) for eq in eqs1[1:4]]
+      Write(eqs1[1]),
+      Write(eqs1[2]),
+      Write(eqs1[3])
     )
     self.play(
       Write(eqs1[4])
     )
     self.play(
-      *[Write(eq) for eq in eqs1[5:]]
+      Write(eqs1[5]),
+      Write(eqs1[6]),
+      Write(eqs1[7])
     )
 
-    self.wait()
+class DisplayProblem(Scene):
+  def construct(self):
+    text = Tex(r"What type of conic section is this?")
+    eq = MathTex(r"8x^2+16xy+8y^2+3x+2y+7=0")
+    exp1 = [
+      Tex(r"Let's use the formula $B^2-4AC$ to classify this equation."),
+      MathTex(r"{{B^2-4AC}}"),
+      MathTex(r"{{B^2-4AC}} = 16^2 - 4\cdot8\cdot8"),
+      MathTex(r"{{B^2-4AC = 16^2 - 4\cdot8\cdot8}}"),
+      MathTex(r"{{B^2-4AC = 16^2 - 4\cdot8\cdot8}} = 256 - 256"),
+      MathTex(r"{{B^2-4AC = 16^2 - 4\cdot8\cdot8 = 256 - 256}}"),
+      MathTex(r"{{B^2-4AC = 16^2 - 4\cdot8\cdot8 = 256 - 256}} = 0")
+    ]
+    text2 = Tex(r"A student applied a rotation to this equation\\about the origin, and got this equation.")
+    text3 = Tex(r"However, their paper fell in some water,\\and some of the coefficients washed out.\\Find the missing values.")
+    eq2 = MathTex(r"\_x^2+\_xy+5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + \_ = 0")
+    exp2 = [
+      Tex(r"First, let's use the fact that $A + C$ remains constant."),
+      Tex(r"In our equation, there is no $C$ coefficient,\\which means we have $0xy$, and $C = 0$."),
+      Tex(r"Before, $A+C$ was simply $8+8=16$.\\After the transformation, we get $A + 0 = 16$, so $A = 16$."),
+      Tex(r"Next, we use the fact that $B^2+4AC$\\remains constant after a transformation."),
+      Tex(r"Before, $B^2-4AC$ equalled $0$,\\which was how we knew it was a parabola."),
+      Tex(r"Now, plugging in values for\\$B^2-4AC$, we get $B^2 - 0 = 0$. So, $B = 0$."),
+      Tex(r"Finally, $F$ also remains the same\\during a transformation, so $F$ simply equals $7$.")
+    ]
 
-#manim -pqk intro.py Intro
-#manim -pqk intro.py GeneralizeConicFormulas
-#manim -pqk intro.py DeriveTheta
-#manim -pqk intro.py DisplayEquations
+    self.play(
+      Write(text.shift(UP*3).scale(0.9)),
+      Write(eq.shift(UP*2.25).scale(0.9))
+    )
+
+    self.play(
+      Write(exp1[0].scale(0.9))
+    )
+
+    self.play(
+      Write(exp1[1].shift(DOWN).scale(0.9))
+    )
+
+    self.play(
+      TransformMatchingTex(exp1[1], exp1[2].shift(DOWN))
+    )
+
+    self.remove(exp1[2])
+    self.add(exp1[3].shift(DOWN))
+
+    self.play(
+      TransformMatchingTex(exp1[3], exp1[4].shift(DOWN))
+    )
+
+    self.remove(exp1[4])
+    self.add(exp1[5].shift(DOWN))
+
+    self.play(
+      TransformMatchingTex(exp1[5], exp1[6].shift(DOWN))
+    )
+
+    self.play(
+      FadeOut(Group(text, exp1[6], exp1[0]), shift=UP),
+      eq.animate.shift(UP)
+    )
+
+    self.play(
+      Write(text2.shift(UP*1.5).scale(0.9))
+    )
+
+    self.play(
+      Write(eq2.shift(DOWN*0.25).scale(0.9))
+    )
+
+    self.play(
+      Write(text3.shift(DOWN*2.5).scale(0.9))
+    )
+
+    self.play(
+      FadeOut(text2, shift=DOWN),
+      FadeOut(text3, shift=DOWN),
+      eq2.animate.shift(UP*2)
+    )
+
+    self.play(
+      Write(exp2[0].shift(UP*0.5).scale(0.9))
+    )
+
+    self.play(
+      Write(exp2[1].shift(DOWN*1).scale(0.9))
+    )
+
+    self.play(
+      Write(exp2[2].shift(DOWN*2.5).scale(0.9))
+    )
+    eq2_new = MathTex(r"{{\_}}x^2+\_xy+5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + \_ = 0").shift(UP*1.75)
+    self.remove(eq2)
+    eq2 = eq2_new
+    self.add(eq2_new.scale(0.9))
+    eq2_new = MathTex(r"{{16}}x^2+\_xy+5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + \_ = 0").shift(UP*1.75)
+
+    self.play(
+      FadeOut(Group(exp2[0], exp2[1], exp2[2]), shift=DOWN),
+      TransformMatchingTex(eq2, eq2_new.scale(0.9))
+    )
+    eq2 = eq2_new
+
+    self.play(
+      Write(exp2[3].shift(UP*0.5).scale(0.9))
+    )
+
+    self.play(
+      Write(exp2[4].shift(DOWN*1).scale(0.9))
+    )
+
+    self.play(
+      Write(exp2[5].shift(DOWN*2.5).scale(0.9))
+    )
+
+    eq2_new = MathTex(r"16x^2+{{\_}}xy+5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + \_ = 0").shift(UP*1.75)
+    self.remove(eq2)
+    eq2 = eq2_new
+    self.add(eq2_new.scale(0.9))
+    eq2_new = MathTex(r"16x^2+{{0}}xy+5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + \_ = 0").shift(UP*1.75)
+
+    self.play(
+      FadeOut(Group(exp2[3], exp2[4], exp2[5]), shift=DOWN),
+      TransformMatchingTex(eq2, eq2_new.scale(0.9))
+    )
+    eq2 = eq2_new
+
+    eq2_new = MathTex(r"16x^2+{{0xy+}}5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + \_ = 0").shift(UP*1.75)
+    self.remove(eq2)
+    eq2 = eq2_new
+    self.add(eq2_new.scale(0.9))
+    eq2_new = MathTex(r"16x^2+", r"5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + \_ = 0").shift(UP*1.75)
+
+    self.play(
+      TransformMatchingTex(eq2, eq2_new.scale(0.9))
+    )
+    eq2 = eq2_new
+
+    self.play(
+      Write(exp2[6].shift(UP*0.5).scale(0.9))
+    )
+
+    eq2_new = MathTex(r"16x^2+5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + {{\_}} = 0").shift(UP*1.75)
+    self.remove(eq2)
+    eq2 = eq2_new
+    self.add(eq2_new.scale(0.9))
+    eq2_new = MathTex(r"16x^2+5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + 7 = 0").shift(UP*1.75)
+
+    self.play(
+      FadeOut(exp2[6], shift=DOWN),
+      TransformMatchingTex(eq2, eq2_new.scale(0.9))
+    )
+
+class Combined(Scene):
+  def construct(self):
+    Intro.construct(self)
+    self.wait()
+    self.play(
+      *[FadeOut(mob) for mob in self.mobjects]
+    )
+    GeneralizeConicFormulas.construct(self)
+    self.wait()
+    self.remove(*self.mobjects)
+    DisplayRotationEquation.construct(self)
+    self.wait()
+    self.remove(*self.mobjects)
+    DisplayEquations.construct(self)
+    self.wait()
+    self.play(
+      *[FadeOut(mob) for mob in self.mobjects]
+    )
+    DisplayProblem.construct(self)
+
+    self.wait()
+    self.wait()
+    self.wait()
+    self.wait()
