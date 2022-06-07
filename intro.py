@@ -1,7 +1,21 @@
+from logging import setLogRecordFactory
 import numpy as np
 from manim import *
 
 config.max_files_cached = 10000
+
+class Scene0(Scene):
+  def construct(self):
+    self.add_sound("Scene 0.mp3", gain=10)
+    self.wait(6.7)
+    self.play(
+      Write(Text("Rotated Conics"))
+    )
+    self.wait(0.5)
+    self.play(
+      Write(Text("Sources:").shift(DOWN).scale(0.6)),
+      Write(Text("https://www.andrews.edu/~rwright/Precalculus-RLW/Text/07-05.html").shift(DOWN*1.75).scale(0.6))
+    )
 
 class Intro(Scene):
   def construct(self):
@@ -184,6 +198,17 @@ class Intro(Scene):
 
 class GeneralizeConicFormulas(Scene):
   def construct(self):
+    self.add_sound("Scene 2/2.1.mp3", gain=15)
+    self.add_sound("Scene 2/2.2.mp3", 4.2, gain=15)
+    self.add_sound("Scene 2/2.3.mp3", 4.2 + 6.8, gain=15)
+    self.add_sound("Scene 2/2.4.mp3", 4.2 + 6.8 + 7.1, gain=15)
+    self.add_sound("Scene 2/2.5.mp3", 4.2 + 6.8 + 7.1 + 5, gain=15)
+    self.add_sound("Scene 2/2.6.mp3", 4.2 + 6.8 + 7.1 + 5 + 4.4, gain=15)
+    self.add_sound("Scene 2/2.7.mp3", 4.2 + 6.8 + 7.1 + 5 + 4.4 + 8, gain=15)
+    self.add_sound("Scene 2/2.8.mp3", 4.2 + 6.8 + 7.1 + 5 + 4.4 + 8 + 4.9, gain=15)
+    self.add_sound("Scene 2/2.9.mp3", 4.2 + 6.8 + 7.1 + 5 + 4.4 + 8 + 4.9 + 4.6, gain=15)
+    self.add_sound("Scene 2/2.10.mp3", 4.2 + 6.8 + 7.1 + 5 + 4.4 + 8 + 4.9 + 4.6 + 5.7, gain=15)
+    self.wait(4.2 + 6.8)
     eqs1_g = {"font_size": 40}
     arrowTemplate = MathTex(r"=>", **eqs1_g)
     eqs1 = [
@@ -197,11 +222,11 @@ class GeneralizeConicFormulas(Scene):
       *[Write(eqs1[i].shift([-4,(2-i)*1.5,0])) for i in range(len(eqs1))]
     )
     arrows = [arrowTemplate.copy() for i in range(5)]
-    self.wait()
+    self.wait(4)
     self.play(
-      *[FadeIn(arrows[i].shift([-1,(2-i)*1.5,0]), shift=RIGHT) for i in range(len(arrows))]
+      *[FadeIn(arrows[i].shift([-1,(2-i)*1.5,0]), shift=RIGHT) for i in range(len(arrows))],
+      run_time=0.5
     )
-    self.wait()
     eqs2 = [
       MathTex(r"x^2-2xh+h^2 + y^2-2yk+k^2 = r^2", **eqs1_g),
       MathTex(r"\frac{x^2-2xh+h^2}{a^2} + \frac{y^2-2yk+k^2}{b^2} = 1", **eqs1_g),
@@ -212,6 +237,7 @@ class GeneralizeConicFormulas(Scene):
     self.play(
       *[Write(eqs2[i].shift([3,(2-i)*1.5,0])) for i in range(len(eqs2))]
     )
+    self.wait(2.3)
     self.play(
       *[FadeOut(eqs1[i], shift=RIGHT) for i in range(len(eqs1))],
       *[FadeOut(arrows[i], shift=RIGHT) for i in range(len(arrows))],
@@ -234,6 +260,7 @@ class GeneralizeConicFormulas(Scene):
     self.play(
       *[Write(eqs3[i].shift([3.6,(2-i)*1.5,0])) for i in range(len(eqs3))]
     )
+    self.wait(1)
     self.play(
       *[FadeOut(eqs2[i], shift=RIGHT) for i in range(len(eqs2))],
       *[FadeOut(arrows[i], shift=RIGHT) for i in range(len(arrows))],
@@ -252,6 +279,7 @@ class GeneralizeConicFormulas(Scene):
     self.play(
       *[FadeIn(arrows[i].shift([-0.1,(2-i)*1.5,0]), shift=RIGHT) for i in range(len(arrows))]
     )
+    self.wait(0.7)
     self.play(
       *[Write(eqs4[i].shift([3.5,(2-i)*1.5,0])) for i in range(len(eqs4))]
     )
@@ -262,6 +290,7 @@ class GeneralizeConicFormulas(Scene):
       MathTex(r"{{\left(\frac{1}{a^2}\right)}}{{x^2}} - {{\left(\frac{1}{b^2}\right)}}{{y^2}} - {{\left(\frac{2h}{a^2}\right)}}{{x}} + {{\left(\frac{2k}{b^2}\right)}}{{y}} + {{\left(\frac{h^2}{a^2} - \frac{k^2}{b^2} - 1\right)}}{{ = 0}}", **eqs1_g),
       MathTex(r"{{-\left(\frac{1}{b^2}\right)}}{{x^2}} + {{\left(\frac{1}{a^2}\right)}}{{y^2}} + {{\left(\frac{2h}{b^2}\right)}}{{x}} - {{\left(\frac{2k}{a^2}\right)}}{{y}} + {{\left(-\frac{h^2}{b^2} + \frac{k^2}{a^2} - 1\right)}}{{ = 0}}", **eqs1_g)
     ]
+    self.wait(2)
     self.play(
       *[FadeOut(eqs3[i], shift=RIGHT) for i in range(len(eqs3))],
       *[FadeOut(arrows[i], shift=RIGHT) for i in range(len(arrows))],
@@ -280,6 +309,7 @@ class GeneralizeConicFormulas(Scene):
     self.play(
       *[Write(eqs5[i].shift([0,(2-i)*1.5,0])) for i in range(len(eqs5))]
     )
+    self.wait(8.7)
 
     eqs6 = [eq.copy() for eq in eqs5]
     for eq in eqs6:
@@ -299,6 +329,7 @@ class GeneralizeConicFormulas(Scene):
         Group(*eqs6)
       )
     )
+    self.wait(4)
 
     self.play(
       FadeOut(Group(*eqs6), shift=DOWN)
@@ -317,9 +348,13 @@ class GeneralizeConicFormulas(Scene):
     self.play(
       Write(eq)
     )
+    self.wait(11.1)
 
 class DisplayRotationEquation(Scene):
   def construct(self):
+    self.add_sound("Scene 3/3.1.mp3", gain=15)
+    self.add_sound("Scene 3/3.2.mp3", 2.7, gain=15)
+    self.add_sound("Scene 3/3.3.mp3", 10.5, gain=15)
     eq_old = MathTex(r"{{A}}{{x^2}} + {{C}}{{y^2}} + {{D}}{{x}} + {{E}}{{y}} + {{F}} = 0")
     eq_old.submobjects[0].color = RED
     eq_old.submobjects[1].color = BLUE
@@ -354,6 +389,7 @@ class DisplayRotationEquation(Scene):
     self.play(
       Create(ellipse)
     )
+    self.wait(1.5)
 
     self.play(
       TransformMatchingTex(eq_old, eq2_old.shift(UP*2)),
@@ -363,6 +399,7 @@ class DisplayRotationEquation(Scene):
     self.play(
       TransformMatchingTex(eq2_old, eq2_org.shift(UP*2))
     )
+    self.wait(8.5)
 
     self.play(
       FadeOut(ellipse, shift=DOWN)
@@ -374,10 +411,12 @@ class DisplayRotationEquation(Scene):
     self.play(
       Write(rotationFormula)
     )
+    self.wait(3.2)
 
     self.play(
       Write(domainRestriction)
     )
+    self.wait(2)
 
     self.play(
       eq2_org.animate.scale(0.8).shift([-2.5,0.9,0]),
@@ -387,6 +426,10 @@ class DisplayRotationEquation(Scene):
 
 class DisplayEquations(Scene):
   def construct(self):
+    self.add_sound("Scene 4/4.1.mp3", gain=15)
+    self.add_sound("Scene 4/4.2.mp3", 2.7, gain=15)
+    self.add_sound("Scene 4/4.3.mp3", 11, gain=15)
+    self.add_sound("Scene 4/4.4.mp3", 24.1, gain=15)
     eq2_org = MathTex(r"{{A}}{{x^2}} + {{B}}{{xy}} + {{C}}{{y^2}} + {{D}}{{x}} + {{E}}{{y}} + {{F}} = 0")
     rotationFormula = MathTex(r"\cot(2\theta) = \frac{A-C}{B}").shift(DOWN*0.5)
     domainRestriction = Tex(r"Domain: $0<\theta<\frac{\pi}{2}$").shift(DOWN*2)
@@ -396,6 +439,7 @@ class DisplayEquations(Scene):
       rotationFormula.scale(0.8).shift([4,3.8,0]),
       domainRestriction.scale(0.8).shift([4,4.5,0])
     )
+    self.wait(2.7)
 
     eqs1 = [
       Tex(r"These remain constant, no matter what rigid transformation\\(translation or rotation) is applied to it.").scale(0.8).shift(UP*1.6),
@@ -410,22 +454,32 @@ class DisplayEquations(Scene):
     self.play(
       Write(eqs1[0])
     )
+    self.wait(6)
     self.play(
       Write(eqs1[1]),
       Write(eqs1[2]),
       Write(eqs1[3])
     )
+    self.wait(12.1)
     self.play(
       Write(eqs1[4])
     )
+    self.wait(9)
+
     self.play(
       Write(eqs1[5]),
       Write(eqs1[6]),
       Write(eqs1[7])
     )
+    self.wait(19.2)
 
 class DisplayProblem(Scene):
   def construct(self):
+    self.add_sound("Scene 5/5.1.mp3", gain=19)
+    self.add_sound("Scene 5/5.2.mp3", 4, gain=15)
+    self.add_sound("Scene 5/5.3.mp3", 34.5, gain=15)
+    self.add_sound("Scene 5/5.4.mp3", 94, gain=15)
+    self.wait(4)
     text = Tex(r"What type of conic section is this?")
     eq = MathTex(r"8x^2+16xy+8y^2+3x+2y+7=0")
     exp1 = [
@@ -444,7 +498,7 @@ class DisplayProblem(Scene):
       Tex(r"First, let's use the fact that $A + C$ remains constant."),
       Tex(r"In our equation, there is no $C$ coefficient,\\which means we have $0xy$, and $C = 0$."),
       Tex(r"Before, $A+C$ was simply $8+8=16$.\\After the transformation, we get $A + 0 = 16$, so $A = 16$."),
-      Tex(r"Next, we use the fact that $B^2+4AC$\\remains constant after a transformation."),
+      Tex(r"Next, we use the fact that $B^2-4AC$\\remains constant after a transformation."),
       Tex(r"Before, $B^2-4AC$ equalled $0$,\\which was how we knew it was a parabola."),
       Tex(r"Now, plugging in values for\\$B^2-4AC$, we get $B^2 - 0 = 0$. So, $B = 0$."),
       Tex(r"Finally, $F$ also remains the same\\during a transformation, so $F$ simply equals $7$.")
@@ -454,18 +508,22 @@ class DisplayProblem(Scene):
       Write(text.shift(UP*3).scale(0.9)),
       Write(eq.shift(UP*2.25).scale(0.9))
     )
+    self.wait(2.8)
 
     self.play(
       Write(exp1[0].scale(0.9))
     )
+    self.wait(2.8)
 
     self.play(
       Write(exp1[1].shift(DOWN).scale(0.9))
     )
+    self.wait(1.8)
 
     self.play(
       TransformMatchingTex(exp1[1], exp1[2].shift(DOWN))
     )
+    self.wait(10.8)
 
     self.remove(exp1[2])
     self.add(exp1[3].shift(DOWN))
@@ -473,6 +531,7 @@ class DisplayProblem(Scene):
     self.play(
       TransformMatchingTex(exp1[3], exp1[4].shift(DOWN))
     )
+    self.wait(3.1)
 
     self.remove(exp1[4])
     self.add(exp1[5].shift(DOWN))
@@ -497,6 +556,7 @@ class DisplayProblem(Scene):
     self.play(
       Write(text3.shift(DOWN*2.5).scale(0.9))
     )
+    self.wait(5)
 
     self.play(
       FadeOut(text2, shift=DOWN),
@@ -507,43 +567,55 @@ class DisplayProblem(Scene):
     self.play(
       Write(exp2[0].shift(UP*0.5).scale(0.9))
     )
+    self.wait(1.8)
 
     self.play(
       Write(exp2[1].shift(DOWN*1).scale(0.9))
     )
+    self.wait(4.5)
 
     self.play(
       Write(exp2[2].shift(DOWN*2.5).scale(0.9))
     )
+    self.wait(11)
+
     eq2_new = MathTex(r"{{\_}}x^2+\_xy+5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + \_ = 0").shift(UP*1.75)
     self.remove(eq2)
     eq2 = eq2_new
     self.add(eq2_new.scale(0.9))
     eq2_new = MathTex(r"{{16}}x^2+\_xy+5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + \_ = 0").shift(UP*1.75)
+    eq2_new.submobjects[0].color=RED
 
     self.play(
       FadeOut(Group(exp2[0], exp2[1], exp2[2]), shift=DOWN),
       TransformMatchingTex(eq2, eq2_new.scale(0.9))
     )
     eq2 = eq2_new
+    self.wait(0.5)
 
     self.play(
       Write(exp2[3].shift(UP*0.5).scale(0.9))
     )
+    self.wait(6)
 
     self.play(
       Write(exp2[4].shift(DOWN*1).scale(0.9))
     )
+    self.wait(4)
 
     self.play(
       Write(exp2[5].shift(DOWN*2.5).scale(0.9))
     )
+    self.wait(5)
 
-    eq2_new = MathTex(r"16x^2+{{\_}}xy+5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + \_ = 0").shift(UP*1.75)
+    eq2_new = MathTex(r"{{16}}x^2+{{\_}}xy+5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + \_ = 0").shift(UP*1.75)
+    eq2_new.submobjects[0].color=RED
     self.remove(eq2)
     eq2 = eq2_new
     self.add(eq2_new.scale(0.9))
-    eq2_new = MathTex(r"16x^2+{{0}}xy+5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + \_ = 0").shift(UP*1.75)
+    eq2_new = MathTex(r"{{16}}x^2+{{0}}xy+5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + \_ = 0").shift(UP*1.75)
+    eq2_new.submobjects[0].color=RED
+    eq2_new.submobjects[2].color=RED
 
     self.play(
       FadeOut(Group(exp2[3], exp2[4], exp2[5]), shift=DOWN),
@@ -551,11 +623,14 @@ class DisplayProblem(Scene):
     )
     eq2 = eq2_new
 
-    eq2_new = MathTex(r"16x^2+{{0xy+}}5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + \_ = 0").shift(UP*1.75)
+    eq2_new = MathTex(r"{{16}}x^2+{{0}}{{xy+}}5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + \_ = 0").shift(UP*1.75)
+    eq2_new.submobjects[0].color=RED
+    eq2_new.submobjects[2].color=RED
     self.remove(eq2)
     eq2 = eq2_new
     self.add(eq2_new.scale(0.9))
-    eq2_new = MathTex(r"16x^2+", r"5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + \_ = 0").shift(UP*1.75)
+    eq2_new = MathTex(r"{{16}}x^2+", r"5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + \_ = 0").shift(UP*1.75)
+    eq2_new.submobjects[0].color=RED
 
     self.play(
       TransformMatchingTex(eq2, eq2_new.scale(0.9))
@@ -565,25 +640,64 @@ class DisplayProblem(Scene):
     self.play(
       Write(exp2[6].shift(UP*0.5).scale(0.9))
     )
+    self.wait(4.5)
 
-    eq2_new = MathTex(r"16x^2+5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + {{\_}} = 0").shift(UP*1.75)
+    eq2_new = MathTex(r"{{16}}x^2+5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + {{\_}} = 0").shift(UP*1.75)
+    eq2_new.submobjects[0].color=RED
     self.remove(eq2)
     eq2 = eq2_new
     self.add(eq2_new.scale(0.9))
-    eq2_new = MathTex(r"16x^2+5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + 7 = 0").shift(UP*1.75)
+    eq2_new = MathTex(r"{{16}}x^2+5\sqrt{2}\cdot x - \frac{\sqrt{2}}{2}y + {{7}} = 0").shift(UP*1.75)
+    eq2_new.submobjects[0].color=RED
+    eq2_new.submobjects[2].color=RED
 
     self.play(
       FadeOut(exp2[6], shift=DOWN),
       TransformMatchingTex(eq2, eq2_new.scale(0.9))
     )
+    self.wait(1)
+    self.play(
+      FadeOut(eq, shift=UP),
+      eq2_new.animate.shift(DOWN*1.75).scale(1.25)
+    )
+    self.wait(1)
+
+class Scene6(Scene):
+  def construct(self):
+    self.add_sound("Scene 6/6.1.mp3", gain=15)
+    img = ImageMobject("Parabolas Graph.jpg").scale(1.5)
+    self.play(
+      *[FadeOut(mob) for mob in self.mobjects],
+      FadeIn(img)
+    )
+    self.wait(4.8)
+    self.play(
+      FadeOut(img)
+    )
+    self.play(
+      Write(Text("Applications").scale(2))
+    )
+    self.add_sound("Scene 6/6.2.mp3", gain=15)
+    self.wait(39)
+    self.play(
+      *[FadeOut(mob) for mob in self.mobjects]
+    )
+    self.play(
+      Write(Text("Thanks for watching!", slant=ITALIC))
+    )
 
 class Combined(Scene):
   def construct(self):
-    Intro.construct(self)
+    Scene0.construct(self)
     self.wait()
     self.play(
       *[FadeOut(mob) for mob in self.mobjects]
     )
+    # Intro.construct(self)
+    # self.wait()
+    # self.play(
+    #   *[FadeOut(mob) for mob in self.mobjects]
+    # )
     GeneralizeConicFormulas.construct(self)
     self.wait()
     self.remove(*self.mobjects)
@@ -596,8 +710,5 @@ class Combined(Scene):
       *[FadeOut(mob) for mob in self.mobjects]
     )
     DisplayProblem.construct(self)
-
-    self.wait()
-    self.wait()
-    self.wait()
+    Scene6.construct(self)
     self.wait()
